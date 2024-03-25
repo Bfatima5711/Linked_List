@@ -1,0 +1,60 @@
+******Insert before the node with Value X of the…********
+
+class Node
+ {
+     public int data;
+     public Node next;
+
+     Node()
+     {
+         this.data = 0;
+         this.next = null;
+     }
+
+     Node(int data)
+     {
+         this.data = data;
+         this.next = null;
+     }
+
+     Node(int data, Node next)
+     {
+         this.data = data;
+         this.next = next;
+     }
+ }
+
+ *****************************************************************/
+
+
+public class Solution {
+    public static Node insertBeforeValue(Node head, int x, int val) {
+        // Worst Case - TC:O(n) Best Case - TC:O(1)  SC:O(1)
+        Node newNode = new Node(x);
+
+        if(head == null)   return newNode;
+
+        if(head.data == val){
+            newNode.next = head;
+            return newNode;
+        }
+
+        Node temp = head;
+        Node prev = head;
+
+        while(temp != null){
+            if(temp.data == val){
+                prev.next = newNode;
+                newNode.next = temp;
+                return head;
+            }
+            prev = temp;
+            temp = temp.next;
+        }
+
+        prev.next = newNode;
+        newNode.next = temp;
+        return head;
+
+
+}}
