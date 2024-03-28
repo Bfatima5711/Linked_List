@@ -1,0 +1,78 @@
+***********Problem Statement**********
+*************Remove Nth Node From End of List************
+
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+Example 2:
+
+Input: head = [1], n = 1
+Output: []
+Example 3:
+
+Input: head = [1,2], n = 1
+Output: [1]
+ 
+
+Constraints:
+
+The number of nodes in the list is sz.
+1 <= sz <= 30
+0 <= Node.val <= 100
+1 <= n <= sz
+ 
+************Code**************
+
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        //Approach 1: TC:O(2 * lenOfLL) SC:O(1)
+        if(head == null || (head.next == null && n == 1)) return null;
+        ListNode temp = head;
+        int totalNodeCnt = 0;
+        while(temp != null){//TC:O(lenOfLL)
+            temp = temp.next;
+            totalNodeCnt++;
+        }
+        temp = head;
+        int deleteNodeAt = (totalNodeCnt - n);
+        if(deleteNodeAt == 0){
+            head = temp.next;
+            return head;
+        }
+        while(temp != null){//TC:O(lenOfLL-n)
+            deleteNodeAt--;
+            if(deleteNodeAt == 0){
+                temp.next = temp.next.next;
+                return head;
+            }
+            temp = temp.next;
+        }
+
+        return head;
+
+        //Approach 2: TC:O(lenOfLL) SC:O(1)
+
+        ListNode fast = head;
+
+        for(int i=0; i<n; i++){
+            fast = fast.next;
+        }
+
+        if(fast == null) return head.next;// base case for n == len of LL
+        ListNode slow = head;
+
+        while(fast.next != null){
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        slow.next = slow.next.next;
+        return head;
+    }
+}
